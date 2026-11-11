@@ -3,772 +3,578 @@
 <html lang="uk">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Мій простір — PROJECT OS</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>EMBER — Habit Tracker</title>
 <style>
 :root {
-  --bg:#f6f6f3;
-  --white:#ffffff;
-  --black:#191919;
-  --gray:#777770;
-  --line:#e6e6df;
-  --yellow:#f5cf49;
-  --soft:#fff6d7;
-  --green:#27845b;
-  --red:#bd4949;
+ --bg:#101114;
+ --panel:#1b1d21;
+ --panel2:#23262b;
+ --line:#33363c;
+ --text:#f4f4f4;
+ --muted:#94979e;
+ --orange:#ff9340;
+ --green:#53c68c;
+ --red:#e96a6a;
 }
 *{box-sizing:border-box}
 body{
-  margin:0;
-  background:var(--bg);
-  color:var(--black);
-  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+ margin:0;background:var(--bg);color:var(--text);
+ font-family:-apple-system,BlinkMacSystemFont,
+ "Segoe UI",sans-serif;
 }
-button,input,textarea,select{font:inherit}
+button,input,select{font:inherit}
 button{cursor:pointer}
-button:disabled{opacity:.5;cursor:not-allowed}
 .layout{display:flex;min-height:100vh}
-.sidebar{
-  width:245px;
-  background:#fff;
-  border-right:1px solid var(--line);
-  padding:30px 17px;
-  flex-shrink:0;
+aside{
+ width:245px;background:#17191c;
+ border-right:1px solid var(--line);
+ padding:30px 18px;flex-shrink:0;
 }
 .logo{
-  font-size:22px;
-  font-weight:850;
-  letter-spacing:-1px;
-  margin:0 12px 38px;
+ font-size:27px;font-weight:900;
+ letter-spacing:2px;margin:0 12px 40px;
 }
-.logo span{
-  background:var(--yellow);
-  padding:4px 7px;
-  border-radius:7px;
+.logo span{color:var(--orange)}
+.nav{
+ width:100%;display:block;text-align:left;
+ border:0;border-radius:12px;padding:15px;
+ background:transparent;color:var(--muted);
+ margin-bottom:7px;
 }
-.nav{display:grid;gap:7px}
-.nav button{
-  border:0;
-  background:transparent;
-  text-align:left;
-  padding:13px 15px;
-  border-radius:11px;
-  color:#666;
+.nav.active{background:#35291f;color:var(--orange)}
+main{flex:1;min-width:0;padding:35px;max-width:1450px;margin:auto}
+header{
+ display:flex;justify-content:space-between;
+ align-items:center;gap:15px;flex-wrap:wrap;
 }
-.nav button:hover{background:#f5f5f1}
-.nav button.active{
-  background:var(--soft);
-  color:var(--black);
-  font-weight:700;
-}
-.content{
-  flex:1;
-  padding:36px;
-  max-width:1450px;
-  min-width:0;
-}
-.header{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:15px;
-  margin-bottom:30px;
-}
-h1{font-size:32px;letter-spacing:-1.3px;margin:0}
-h2{font-size:21px;margin:0 0 18px}
-h3{font-size:17px;margin:0 0 10px}
-p{line-height:1.5}
-.muted{color:var(--gray)}
-.small{font-size:13px}
+h1{font-size:30px;margin:0 0 8px;letter-spacing:-1px}
+h2{font-size:19px}
+p{color:var(--muted)}
 .btn{
-  background:var(--yellow);
-  border:0;
-  border-radius:10px;
-  padding:12px 17px;
-  color:#222;
-  font-weight:700;
+ border:0;border-radius:11px;
+ padding:12px 18px;background:var(--orange);
+ color:#181818;font-weight:750;
 }
-.btn:hover{filter:brightness(.97)}
-.btn.dark{background:#222;color:white}
-.btn.light{background:#f1f1ed}
-.btn.red{background:#fff0ef;color:var(--red)}
-.grid{
-  display:grid;
-  grid-template-columns:repeat(3,minmax(0,1fr));
-  gap:17px;
+.btn.alt{background:#35383d;color:white}
+.btn.red{background:#492929;color:#ff9999}
+.btn.small{padding:9px 12px;font-size:13px}
+.stats{
+ display:grid;grid-template-columns:repeat(4,1fr);
+ gap:15px;margin:30px 0;
 }
-.card{
-  background:var(--white);
-  border:1px solid var(--line);
-  border-radius:17px;
-  padding:23px;
-  min-width:0;
+.stat,.panel{
+ background:var(--panel);border:1px solid var(--line);
+ border-radius:17px;padding:22px;
 }
-.number{
-  font-size:37px;
-  font-weight:800;
-  letter-spacing:-1px;
-  margin-top:15px;
+.stat small{color:var(--muted)}
+.stat strong{display:block;font-size:30px;margin-top:13px}
+.habit{
+ background:var(--panel);
+ border:1px solid var(--line);
+ border-radius:17px;margin-bottom:13px;
+ padding:20px;
 }
-.section{margin-top:28px}
-.progress{
-  height:9px;
-  background:#eeeeea;
-  border-radius:30px;
-  overflow:hidden;
+.habit-top{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.emoji{
+ width:48px;height:48px;border-radius:13px;
+ display:grid;place-items:center;
+ background:#323033;font-size:25px;
 }
-.progress div{
-  height:100%;
-  background:var(--yellow);
-  transition:width .25s;
+.info{flex:1;min-width:130px}
+.info strong{font-size:16px;overflow-wrap:anywhere}
+.info small{display:block;color:var(--muted);margin-top:6px}
+.fire{color:var(--orange);font-weight:800}
+.actions{display:flex;gap:8px;flex-wrap:wrap}
+.history{
+ display:grid;grid-template-columns:repeat(14,minmax(0,1fr));
+ gap:5px;margin-top:20px;
 }
-.form{display:grid;gap:12px}
-input,textarea,select{
-  width:100%;
-  border:1px solid #dddcd5;
-  background:white;
-  padding:12px;
-  border-radius:10px;
-  outline:none;
-  color:#222;
+.cell{
+ aspect-ratio:1;border-radius:5px;
+ background:#35383c;min-width:0;
 }
-input:focus,textarea:focus,select:focus{
-  border-color:#d0a92c;
-}
-textarea{min-height:105px;resize:vertical}
-.row{display:flex;gap:10px;align-items:center}
-.row>*{min-width:0}
-.project{
-  display:flex;
-  flex-direction:column;
-  gap:12px;
-}
-.project p{margin:0;overflow-wrap:anywhere}
-.project-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:auto}
-.task{
-  display:flex;
-  align-items:center;
-  gap:12px;
-  padding:15px 0;
-  border-bottom:1px solid var(--line);
-}
-.task:last-child{border-bottom:0}
-.task input[type=checkbox]{
-  width:19px;height:19px;
-  accent-color:#e1b72b;
-}
-.task-name{flex:1;overflow-wrap:anywhere}
-.task.done .task-name{text-decoration:line-through;color:#999}
-.task .delete{
-  border:0;background:transparent;
-  color:var(--red);font-size:19px;
+.cell.done{background:var(--green)}
+.cell.missed{background:var(--red)}
+.cell.today{outline:2px solid var(--orange);outline-offset:1px}
+.cell.future{opacity:.35}
+.legend{display:flex;gap:14px;flex-wrap:wrap;margin-top:12px}
+.legend span{font-size:12px;color:var(--muted)}
+.legend i{
+ display:inline-block;width:9px;height:9px;
+ border-radius:3px;margin-right:5px;
 }
 .timer{
-  font-size:clamp(55px,10vw,105px);
-  font-weight:800;
-  letter-spacing:-4px;
-  text-align:center;
-  margin:40px 0;
-  font-variant-numeric:tabular-nums;
+ display:flex;align-items:center;gap:10px;
+ flex-wrap:wrap;margin-top:15px;
 }
-.timer-controls{
-  display:flex;gap:10px;
-  justify-content:center;flex-wrap:wrap;
+.timer-time{
+ font-size:20px;font-weight:800;
+ font-variant-numeric:tabular-nums;
+ margin-right:auto;
 }
-.ideas{
-  display:grid;
-  grid-template-columns:repeat(2,minmax(0,1fr));
-  gap:15px;
+.month-grid{
+ display:grid;grid-template-columns:repeat(7,minmax(0,1fr));
+ gap:7px;
 }
-.idea-text{white-space:pre-wrap;overflow-wrap:anywhere}
-.empty{
-  text-align:center;
-  color:#999;
-  padding:30px;
+.day{
+ min-height:75px;background:var(--panel2);
+ border-radius:10px;padding:8px;
+ border:1px solid transparent;
 }
+.day.current{border-color:var(--orange)}
+.day span{font-size:12px}
+.day-dots{display:flex;gap:4px;flex-wrap:wrap;margin-top:12px}
+.dot{width:9px;height:9px;border-radius:50%}
+.month-head{
+ display:flex;justify-content:space-between;
+ align-items:center;gap:12px;margin-bottom:20px;
+}
+.month-head strong{text-transform:capitalize}
+.weekday{text-align:center;color:var(--muted);font-size:12px;padding:8px}
+.record{
+ display:flex;justify-content:space-between;gap:12px;
+ padding:14px 0;border-bottom:1px solid var(--line);
+ flex-wrap:wrap;
+}
+.record small{color:var(--muted)}
 .hidden{display:none!important}
-.tag{
-  background:var(--soft);
-  padding:5px 9px;
-  border-radius:7px;
-  font-size:12px;
-  font-weight:700;
+.overlay{
+ position:fixed;inset:0;background:#000b;
+ display:grid;place-items:center;padding:15px;z-index:10;
 }
-dialog{
-  width:min(440px,92vw);
-  border:1px solid var(--line);
-  border-radius:18px;
-  padding:25px;
+.modal{
+ background:#222428;border:1px solid var(--line);
+ border-radius:20px;padding:26px;
+ width:100%;max-width:460px;max-height:95vh;overflow:auto;
 }
-dialog::backdrop{background:#0008}
-.stat-row{margin-bottom:18px}
-.stat-row .progress{margin-top:8px}
+label{display:block;font-size:13px;color:#ccc;margin:16px 0 8px}
+input,select{
+ background:#151619;border:1px solid var(--line);
+ color:white;border-radius:10px;padding:12px;width:100%;
+}
+input[type=color]{height:45px;padding:4px}
+.modal-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:24px}
+.empty{text-align:center;padding:45px;color:var(--muted)}
 @media(max-width:850px){
-  .layout{display:block}
-  .sidebar{width:100%;padding:16px}
-  .logo{margin:0 0 15px}
-  .nav{display:flex;overflow-x:auto}
-  .nav button{white-space:nowrap}
-  .content{padding:20px}
-  .grid,.ideas{grid-template-columns:1fr}
-  .header{align-items:flex-start}
+ .layout{display:block}
+ aside{width:100%;padding:14px;border-right:0;border-bottom:1px solid var(--line)}
+ .logo{margin:0 0 14px}
+ .navbox{display:flex;overflow:auto;gap:5px}
+ .nav{white-space:nowrap;width:auto;margin:0}
+ main{padding:22px 14px}
+ .stats{grid-template-columns:repeat(2,1fr);gap:9px}
+ .stat{padding:15px}
+ .stat strong{font-size:25px}
+ .history{grid-template-columns:repeat(14,minmax(0,1fr))}
+ .day{min-height:55px;padding:5px}
 }
 </style>
 </head>
 <body>
-
 <div class="layout">
-<aside class="sidebar">
-  <div class="logo">МОЯ <span>СИСТЕМА.</span></div>
-  <nav class="nav">
-    <button class="active" data-page="home">⌂ Головна</button>
-    <button data-page="projects">▣ Мої проєкти</button>
-    <button data-page="tasks">☑ Завдання</button>
-    <button data-page="today">◷ План на сьогодні</button>
-    <button data-page="focus">◉ Фокус</button>
-    <button data-page="ideas">✦ Ідеї</button>
-    <button data-page="stats">▥ Статистика</button>
-  </nav>
+<aside>
+ <div class="logo">EMBER<span>.</span></div>
+ <div class="navbox">
+  <button class="nav active" data-page="dashboard">◈ Головна</button>
+  <button class="nav" data-page="calendar">▦ Календар</button>
+  <button class="nav" data-page="history">◷ Історія</button>
+  <button class="nav" data-page="analytics">▥ Статистика</button>
+ </div>
 </aside>
-
-<main class="content">
-  <div class="header">
-    <div>
-      <h1 id="pageTitle">Головна</h1>
-      <p class="muted" id="dateText"></p>
-    </div>
-    <button class="btn" onclick="openProject()">+ Новий проєкт</button>
+<main>
+ <section id="dashboard">
+  <header>
+   <div><h1>Мої звички 🔥</h1><p id="dateText"></p></div>
+   <button class="btn" onclick="openEditor()">+ Нова звичка</button>
+  </header>
+  <div class="stats" id="stats"></div>
+  <h2>Твій сьогоднішній прогрес</h2>
+  <div id="habitList"></div>
+ </section>
+ <section id="calendar" class="hidden">
+  <h1>Календар</h1>
+  <p>Усі виконання та пропуски</p>
+  <div class="panel">
+   <div class="month-head">
+    <button class="btn alt small" onclick="moveMonth(-1)">←</button>
+    <strong id="monthTitle"></strong>
+    <button class="btn alt small" onclick="moveMonth(1)">→</button>
+   </div>
+   <div class="month-grid" id="monthGrid"></div>
+   <div class="legend">
+    <span><i style="background:var(--green)"></i>Виконано</span>
+    <span><i style="background:var(--red)"></i>Пропущено</span>
+    <span><i style="background:#555"></i>Без запису</span>
+   </div>
   </div>
-
-  <section id="home">
-    <div class="grid">
-      <div class="card">
-        <div class="muted">Активні проєкти</div>
-        <div class="number" id="homeProjects">0</div>
-      </div>
-      <div class="card">
-        <div class="muted">Виконані завдання</div>
-        <div class="number" id="homeDone">0</div>
-      </div>
-      <div class="card">
-        <div class="muted">Час роботи</div>
-        <div class="number" id="homeTime">0 хв</div>
-      </div>
-    </div>
-
-    <div class="section card">
-      <h2>Загальний прогрес</h2>
-      <div class="progress"><div id="homeProgress"></div></div>
-      <p class="muted" id="homeProgressText"></p>
-    </div>
-
-    <div class="section">
-      <h2>Мої проєкти</h2>
-      <div class="grid" id="homeProjectList"></div>
-    </div>
-  </section>
-
-  <section id="projects" class="hidden">
-    <div class="grid" id="projectList"></div>
-  </section>
-
-  <section id="tasks" class="hidden">
-    <div class="card">
-      <h2>Додати завдання</h2>
-      <form class="form" id="taskForm">
-        <input id="taskTitle" placeholder="Назва завдання" maxlength="200" required>
-        <select id="taskProject"></select>
-        <label class="small muted">Дата виконання (необов'язково)</label>
-        <input type="date" id="taskDate">
-        <button class="btn" type="submit">+ Додати</button>
-      </form>
-    </div>
-    <div class="section card">
-      <h2>Усі завдання</h2>
-      <div id="taskList"></div>
-    </div>
-  </section>
-
-  <section id="today" class="hidden">
-    <div class="card">
-      <h2>Мій план на сьогодні</h2>
-      <p class="muted">Тут відображаються завдання із сьогоднішньою датою.</p>
-      <div id="todayTasks"></div>
-    </div>
-  </section>
-
-  <section id="focus" class="hidden">
-    <div class="card">
-      <h2>Режим зосередження</h2>
-      <p class="muted">Обери проєкт і працюй без зайвих відволікань.</p>
-      <div class="row">
-        <select id="focusProject"></select>
-        <select id="focusDuration" onchange="changeDuration()">
-          <option value="15">15 хвилин</option>
-          <option value="25" selected>25 хвилин</option>
-          <option value="45">45 хвилин</option>
-          <option value="60">60 хвилин</option>
-        </select>
-      </div>
-      <div class="timer" id="timerDisplay">25:00</div>
-      <div class="timer-controls">
-        <button class="btn dark" onclick="startTimer()">Почати</button>
-        <button class="btn light" onclick="pauseTimer()">Пауза</button>
-        <button class="btn light" onclick="resetTimer()">Скинути</button>
-      </div>
-      <p class="muted small" style="text-align:center;margin-top:25px">
-        Після завершення сесії час автоматично додається до статистики.
-      </p>
-    </div>
-  </section>
-
-  <section id="ideas" class="hidden">
-    <div class="card">
-      <h2>Нова ідея</h2>
-      <form class="form" id="ideaForm">
-        <input id="ideaTitle" placeholder="Назва ідеї" maxlength="150" required>
-        <textarea id="ideaText" placeholder="Опиши свою ідею..."></textarea>
-        <button class="btn" type="submit">Зберегти ідею</button>
-      </form>
-    </div>
-    <div class="section ideas" id="ideaList"></div>
-  </section>
-
-  <section id="stats" class="hidden">
-    <div class="grid">
-      <div class="card">
-        <div class="muted">Усього завдань</div>
-        <div class="number" id="statTasks">0</div>
-      </div>
-      <div class="card">
-        <div class="muted">Виконано</div>
-        <div class="number" id="statRate">0%</div>
-      </div>
-      <div class="card">
-        <div class="muted">Фокус-сесій</div>
-        <div class="number" id="statSessions">0</div>
-      </div>
-    </div>
-    <div class="section card">
-      <h2>Прогрес проєктів</h2>
-      <div id="statProjectList"></div>
-    </div>
-    <div class="section card">
-      <h2>Час за проєктами</h2>
-      <div id="statTimeList"></div>
-    </div>
-  </section>
+ </section>
+ <section id="history" class="hidden">
+  <h1>Історія занять</h1>
+  <p>Записи часу за всі дні</p>
+  <div class="panel" id="sessionList"></div>
+ </section>
+ <section id="analytics" class="hidden">
+  <h1>Статистика</h1>
+  <p>Твої результати за весь час</p>
+  <div class="stats" id="analyticsStats"></div>
+  <div id="analyticsList"></div>
+ </section>
 </main>
 </div>
 
-<dialog id="projectDialog">
-  <h2>Створити проєкт</h2>
-  <form class="form" id="projectForm">
-    <input id="projectName" placeholder="Назва проєкту" maxlength="100" required>
-    <textarea id="projectDescription" placeholder="Опис проєкту..."></textarea>
-    <div class="row">
-      <button class="btn" type="submit" style="flex:1">Створити</button>
-      <button class="btn light" type="button"
-        onclick="document.getElementById('projectDialog').close()">
-        Скасувати
-      </button>
-    </div>
+<div class="overlay hidden" id="overlay">
+ <div class="modal">
+  <h2 id="editorTitle">Нова звичка</h2>
+  <form id="editorForm">
+   <label>Назва звички</label>
+   <input id="nameInput" required maxlength="70"
+    placeholder="Наприклад: вивчати англійську">
+   <label>Емодзі</label>
+   <input id="emojiInput" value="🔥" maxlength="8">
+   <label>Категорія</label>
+   <select id="categoryInput">
+    <option>Саморозвиток</option>
+    <option>Спорт</option>
+    <option>Навчання</option>
+    <option>Робота</option>
+    <option>Здоров'я</option>
+    <option>Творчість</option>
+    <option>Інше</option>
+   </select>
+   <label>Колір</label>
+   <input id="colorInput" type="color" value="#ff9340">
+   <label>Ціль: днів на тиждень</label>
+   <select id="targetInput">
+    <option value="7">7 днів</option>
+    <option value="6">6 днів</option>
+    <option value="5">5 днів</option>
+    <option value="4">4 дні</option>
+    <option value="3">3 дні</option>
+    <option value="2">2 дні</option>
+    <option value="1">1 день</option>
+   </select>
+   <div class="modal-actions">
+    <button type="button" class="btn alt" onclick="closeEditor()">Скасувати</button>
+    <button class="btn" type="submit">Зберегти</button>
+   </div>
   </form>
-</dialog>
+ </div>
+</div>
 
 <script>
-const STORAGE_KEY = "my_system_ua_v2";
+const KEY="ember-habits-v2";
+const $=id=>document.getElementById(id);
+let habits=[];
+let editing=null;
+let month=new Date();
+let activeTimer=null;
+let timerStarted=0;
+let timerInterval=null;
 
-function load() {
-  try {
-    const data = JSON.parse(localStorage.getItem(STORAGE_KEY));
-    if (data &&
-        Array.isArray(data.projects) &&
-        Array.isArray(data.tasks) &&
-        Array.isArray(data.ideas) &&
-        Array.isArray(data.sessions)) return data;
-  } catch(e) {
-    console.warn("Помилка читання даних",e);
+function load(){
+ try{
+  const data=JSON.parse(localStorage.getItem(KEY));
+  habits=Array.isArray(data)?data:[];
+ }catch{habits=[]}
+ habits.forEach(h=>{
+  h.days ||= {};
+  h.sessions ||= [];
+ });
+}
+function save(){localStorage.setItem(KEY,JSON.stringify(habits))}
+function key(d=new Date()){
+ return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
+}
+function fromKey(k){
+ const [y,m,d]=k.split("-").map(Number);
+ return new Date(y,m-1,d,12);
+}
+function shift(n){
+ const d=new Date();d.setHours(12,0,0,0);
+ d.setDate(d.getDate()+n);return key(d);
+}
+function esc(s){
+ return String(s).replace(/[&<>"']/g,c=>({
+  "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+ })[c]);
+}
+function done(h,k=key()){return h.days[k]==="done"}
+function missed(h,k=key()){return h.days[k]==="missed"}
+function doneCount(h){return Object.values(h.days).filter(v=>v==="done").length}
+function missCount(h){return Object.values(h.days).filter(v=>v==="missed").length}
+function totalTime(h){
+ return h.sessions.reduce((sum,s)=>sum+s.seconds,0);
+}
+function formatTime(seconds){
+ seconds=Math.max(0,Math.floor(seconds));
+ const h=Math.floor(seconds/3600);
+ const m=Math.floor(seconds%3600/60);
+ const s=seconds%60;
+ return [h,m,s].map(v=>String(v).padStart(2,"0")).join(":");
+}
+function streak(h){
+ let d=new Date();d.setHours(12,0,0,0);
+ if(!done(h,key(d)))d.setDate(d.getDate()-1);
+ let count=0;
+ while(done(h,key(d))){
+  count++;d.setDate(d.getDate()-1);
+ }
+ return count;
+}
+function bestStreak(h){
+ const dates=Object.keys(h.days).filter(k=>done(h,k)).sort();
+ let best=0,run=0,prev=null;
+ for(const k of dates){
+  const diff=prev?Math.round((fromKey(k)-fromKey(prev))/86400000):0;
+  run=diff===1?run+1:1;
+  best=Math.max(best,run);prev=k;
+ }
+ return best;
+}
+function stat(label,value){
+ return `<div class="stat"><small>${label}</small><strong>${value}</strong></div>`;
+}
+function mark(id,status){
+ const h=habits.find(x=>x.id===id);if(!h)return;
+ if(h.days[key()]===status)delete h.days[key()];
+ else h.days[key()]=status;
+ save();render();
+}
+function openEditor(id=null){
+ editing=id;
+ $("editorForm").reset();
+ $("colorInput").value="#ff9340";
+ $("editorTitle").textContent=id?"Редагувати звичку":"Нова звичка";
+ if(id){
+  const h=habits.find(x=>x.id===id);if(!h)return;
+  $("nameInput").value=h.name;
+  $("emojiInput").value=h.emoji;
+  $("categoryInput").value=h.category;
+  $("colorInput").value=h.color;
+  $("targetInput").value=h.target;
+ }
+ $("overlay").classList.remove("hidden");
+}
+function closeEditor(){
+ $("overlay").classList.add("hidden");editing=null;
+}
+$("editorForm").addEventListener("submit",e=>{
+ e.preventDefault();
+ const data={
+  name:$("nameInput").value.trim(),
+  emoji:$("emojiInput").value.trim()||"🔥",
+  category:$("categoryInput").value,
+  color:$("colorInput").value,
+  target:Number($("targetInput").value)
+ };
+ if(!data.name)return;
+ if(editing){
+  const h=habits.find(x=>x.id===editing);
+  if(h)Object.assign(h,data);
+ }else{
+  habits.push({
+   id:crypto.randomUUID(),...data,
+   created:key(),days:{},sessions:[]
+  });
+ }
+ save();closeEditor();render();
+});
+$("overlay").addEventListener("click",e=>{
+ if(e.target===$("overlay"))closeEditor();
+});
+function deleteHabit(id){
+ if(!confirm("Видалити звичку, її час та всю історію?"))return;
+ if(activeTimer===id)stopTimer();
+ habits=habits.filter(h=>h.id!==id);
+ save();render();
+}
+function startTimer(id){
+ if(activeTimer!==null){
+  alert("Спочатку заверши поточний таймер.");
+  return;
+ }
+ activeTimer=id;
+ timerStarted=Date.now();
+ render();
+ timerInterval=setInterval(updateTimer,1000);
+}
+function updateTimer(){
+ const el=$("timer-"+activeTimer);
+ if(el)el.textContent=formatTime((Date.now()-timerStarted)/1000);
+}
+function stopTimer(){
+ if(activeTimer===null)return;
+ const h=habits.find(x=>x.id===activeTimer);
+ const seconds=Math.max(1,Math.floor((Date.now()-timerStarted)/1000));
+ if(h){
+  h.sessions.push({
+   id:crypto.randomUUID(),
+   date:key(),
+   timestamp:Date.now(),
+   seconds
+  });
+  h.days[key()]="done";
+ }
+ clearInterval(timerInterval);
+ activeTimer=null;
+ timerStarted=0;
+ save();render();
+}
+function renderDashboard(){
+ const complete=habits.filter(h=>done(h)).length;
+ const misses=habits.reduce((s,h)=>s+missCount(h),0);
+ const seconds=habits.reduce((s,h)=>s+totalTime(h),0);
+ const best=habits.length?Math.max(...habits.map(bestStreak)):0;
+ $("dateText").textContent=new Intl.DateTimeFormat("uk-UA",{
+  weekday:"long",day:"numeric",month:"long",year:"numeric"
+ }).format(new Date());
+ $("stats").innerHTML=
+  stat("Виконано сьогодні",complete+"/"+habits.length)+
+  stat("Усі пропуски",misses)+
+  stat("Час занять",formatTime(seconds))+
+  stat("Рекорд вогника","🔥 "+best);
+
+ $("habitList").innerHTML=habits.length?habits.map(h=>{
+  let cells="";
+  for(let i=55;i>=0;i--){
+   const k=shift(-i);
+   const state=h.days[k];
+   const cls=state==="done"?"done":state==="missed"?"missed":"";
+   cells+=`<div class="cell ${cls} ${k===key()?"today":""}"
+    title="${k}: ${state==="done"?"Виконано":state==="missed"?"Пропущено":"Без запису"}"></div>`;
   }
-  return {projects:[],tasks:[],ideas:[],sessions:[]};
-}
-
-let db = load();
-
-function save() {
-  try {
-    localStorage.setItem(STORAGE_KEY,JSON.stringify(db));
-  } catch(e) {
-    alert("Не вдалося зберегти дані.");
-  }
-}
-
-function id() {
-  return typeof crypto !== "undefined" && crypto.randomUUID
-    ? crypto.randomUUID()
-    : String(Date.now()) + Math.random();
-}
-
-function safe(v) {
-  return String(v ?? "").replace(/[&<>"']/g,c=>({
-    "&":"&amp;","<":"&lt;",">":"&gt;",
-    '"':"&quot;","'":"&#39;"
-  })[c]);
-}
-
-function localDate() {
-  const d = new Date();
-  return d.getFullYear()+"-"+
-    String(d.getMonth()+1).padStart(2,"0")+"-"+
-    String(d.getDate()).padStart(2,"0");
-}
-
-function projectTasks(pid) {
-  return db.tasks.filter(t=>t.projectId===pid);
-}
-
-function projectName(pid) {
-  return db.projects.find(p=>p.id===pid)?.name || "Без проєкту";
-}
-
-function completion(tasks) {
-  if (!tasks.length) return 0;
-  return Math.round(tasks.filter(t=>t.done).length/tasks.length*100);
-}
-
-function minutesText(n) {
-  let h=Math.floor(n/60),m=n%60;
-  return h ? `${h} год ${m} хв` : `${m} хв`;
-}
-
-function totalMinutes() {
-  return db.sessions.reduce((s,x)=>s+x.minutes,0);
-}
-
-function blank(text) {
-  return `<div class="empty">${safe(text)}</div>`;
-}
-
-function projectCard(p) {
-  const tasks=projectTasks(p.id);
-  const rate=completion(tasks);
-  return `
-  <div class="card project">
-    <div class="row" style="justify-content:space-between">
-      <span class="tag">ПРОЄКТ</span>
-      <span class="muted small">${rate}%</span>
+  return `<div class="habit">
+   <div class="habit-top">
+    <div class="emoji">${esc(h.emoji)}</div>
+    <div class="info">
+     <strong>${esc(h.name)}</strong>
+     <small>${esc(h.category)} · Ціль ${h.target}/7 днів</small>
+     <small class="fire">🔥 ${streak(h)} днів поспіль · Рекорд ${bestStreak(h)}</small>
     </div>
-    <h3>${safe(p.name)}</h3>
-    <p class="muted small">${safe(p.description || "Без опису")}</p>
-    <div class="progress"><div style="width:${rate}%"></div></div>
-    <p class="muted small">
-      ${tasks.filter(t=>t.done).length} із ${tasks.length} завдань
-    </p>
-    <div class="project-actions">
-      <button class="btn light" data-action="open-tasks"
-        data-id="${safe(p.id)}">Завдання</button>
-      <button class="btn red" data-action="delete-project"
-        data-id="${safe(p.id)}">Видалити</button>
+    <div class="actions">
+     <button class="btn small" onclick="mark('${h.id}','done')">
+      ${done(h)?"✓ Виконано":"✓ Виконати"}
+     </button>
+     <button class="btn alt small" onclick="mark('${h.id}','missed')">
+      ${missed(h)?"↩ Скасувати пропуск":"✕ Пропуск"}
+     </button>
+     <button class="btn alt small" onclick="openEditor('${h.id}')">✎</button>
+     <button class="btn red small" onclick="deleteHabit('${h.id}')">Видалити</button>
     </div>
+   </div>
+   <div class="timer">
+    <div class="timer-time" id="timer-${h.id}">
+     ${activeTimer===h.id?formatTime((Date.now()-timerStarted)/1000):formatTime(totalTime(h))}
+    </div>
+    ${activeTimer===h.id?
+      `<button class="btn small" onclick="stopTimer()">■ Завершити</button>`:
+      `<button class="btn alt small" onclick="startTimer('${h.id}')">▶ Почати таймер</button>`}
+   </div>
+   <div class="history">${cells}</div>
+   <div class="legend">
+    <span><i style="background:var(--green)"></i>Виконано: ${doneCount(h)}</span>
+    <span><i style="background:var(--red)"></i>Пропущено: ${missCount(h)}</span>
+    <span>◷ ${formatTime(totalTime(h))}</span>
+   </div>
   </div>`;
+ }).join(""):`<div class="panel empty">
+  <h2>Почни свою першу серію 🔥</h2>
+  <p>Створи будь-яку звичку та відстежуй результат.</p>
+  <button class="btn" onclick="openEditor()">+ Створити</button>
+ </div>`;
 }
-
-function renderProjects() {
-  const html=db.projects.length
-    ? db.projects.map(projectCard).join("")
-    : blank("Поки немає проєктів.");
-  document.getElementById("projectList").innerHTML=html;
-  document.getElementById("homeProjectList").innerHTML=html;
+function moveMonth(n){
+ month=new Date(month.getFullYear(),month.getMonth()+n,1);
+ renderCalendar();
 }
-
-function taskHTML(t) {
-  return `
-  <div class="task ${t.done?"done":""}">
-    <input type="checkbox" data-action="toggle-task"
-      data-id="${safe(t.id)}" ${t.done?"checked":""}>
-    <div class="task-name">
-      <div>${safe(t.title)}</div>
-      <div class="muted small">
-        ${safe(projectName(t.projectId))}
-        ${t.date?" • "+safe(t.date):""}
-      </div>
-    </div>
-    <button class="delete" data-action="delete-task"
-      data-id="${safe(t.id)}">×</button>
+function renderCalendar(){
+ const y=month.getFullYear(),m=month.getMonth();
+ $("monthTitle").textContent=new Intl.DateTimeFormat("uk-UA",{
+  month:"long",year:"numeric"
+ }).format(month);
+ let html=["Пн","Вт","Ср","Чт","Пт","Сб","Нд"]
+  .map(x=>`<div class="weekday">${x}</div>`).join("");
+ const offset=(new Date(y,m,1).getDay()+6)%7;
+ for(let i=0;i<offset;i++)html+="<div></div>";
+ const count=new Date(y,m+1,0).getDate();
+ for(let day=1;day<=count;day++){
+  const k=key(new Date(y,m,day));
+  const dots=habits.filter(h=>h.days[k]).map(h=>
+   `<span class="dot" title="${esc(h.name)}"
+    style="background:${h.days[k]==="done"?"var(--green)":"var(--red)"}"></span>`
+  ).join("");
+  html+=`<div class="day ${k===key()?"current":""}">
+   <span>${day}</span><div class="day-dots">${dots}</div>
   </div>`;
+ }
+ $("monthGrid").innerHTML=html;
 }
-
-function renderTasks() {
-  document.getElementById("taskList").innerHTML=
-    db.tasks.length?db.tasks.map(taskHTML).join(""):
-    blank("Додай своє перше завдання.");
-
-  const today=db.tasks.filter(t=>t.date===localDate());
-  document.getElementById("todayTasks").innerHTML=
-    today.length?today.map(taskHTML).join(""):
-    blank("На сьогодні завдань немає.");
+function renderHistory(){
+ const sessions=habits.flatMap(h=>
+  h.sessions.map(s=>({...s,name:h.name,emoji:h.emoji,habitId:h.id}))
+ ).sort((a,b)=>b.timestamp-a.timestamp);
+ $("sessionList").innerHTML=sessions.length?sessions.map(s=>
+  `<div class="record">
+   <div><strong>${esc(s.emoji)} ${esc(s.name)}</strong>
+    <br><small>${esc(s.date)}</small></div>
+   <div><strong>${formatTime(s.seconds)}</strong>
+    <button class="btn red small" onclick="deleteSession('${s.habitId}','${s.id}')">✕</button>
+   </div>
+  </div>`
+ ).join(""):`<div class="empty">Поки немає записів часу.</div>`;
 }
-
-function renderIdeas() {
-  document.getElementById("ideaList").innerHTML=
-    db.ideas.length
-    ? [...db.ideas].reverse().map(i=>`
-      <div class="card">
-        <span class="tag">ІДЕЯ</span>
-        <h3 style="margin-top:15px">${safe(i.title)}</h3>
-        <p class="idea-text">${safe(i.text)}</p>
-        <p class="muted small">${safe(i.date)}</p>
-        <button class="btn red" data-action="delete-idea"
-          data-id="${safe(i.id)}">Видалити</button>
-      </div>`).join("")
-    :blank("Тут зберігатимуться твої ідеї.");
+function deleteSession(hid,sid){
+ if(!confirm("Видалити цей запис часу?"))return;
+ const h=habits.find(x=>x.id===hid);
+ if(!h)return;
+ h.sessions=h.sessions.filter(s=>s.id!==sid);
+ save();render();
 }
-
-function renderStats() {
-  const done=db.tasks.filter(t=>t.done).length;
-  const rate=completion(db.tasks);
-  document.getElementById("homeProjects").textContent=db.projects.length;
-  document.getElementById("homeDone").textContent=done;
-  document.getElementById("homeTime").textContent=minutesText(totalMinutes());
-  document.getElementById("homeProgress").style.width=rate+"%";
-  document.getElementById("homeProgressText").textContent=
-    `Виконано ${done} із ${db.tasks.length} завдань (${rate}%)`;
-
-  document.getElementById("statTasks").textContent=db.tasks.length;
-  document.getElementById("statRate").textContent=rate+"%";
-  document.getElementById("statSessions").textContent=db.sessions.length;
-
-  document.getElementById("statProjectList").innerHTML=
-    db.projects.length?db.projects.map(p=>{
-      const n=completion(projectTasks(p.id));
-      return `<div class="stat-row">
-        <div class="row" style="justify-content:space-between">
-          <span>${safe(p.name)}</span><b>${n}%</b>
-        </div>
-        <div class="progress"><div style="width:${n}%"></div></div>
-      </div>`;
-    }).join(""):blank("Немає даних.");
-
-  document.getElementById("statTimeList").innerHTML=
-    db.projects.length?db.projects.map(p=>{
-      const n=db.sessions.filter(s=>s.projectId===p.id)
-        .reduce((sum,s)=>sum+s.minutes,0);
-      return `<div class="task">
-        <div class="task-name">${safe(p.name)}</div>
-        <b>${minutesText(n)}</b>
-      </div>`;
-    }).join(""):blank("Немає даних.");
+function renderAnalytics(){
+ const doneTotal=habits.reduce((s,h)=>s+doneCount(h),0);
+ const missedTotal=habits.reduce((s,h)=>s+missCount(h),0);
+ const seconds=habits.reduce((s,h)=>s+totalTime(h),0);
+ const activeDays=new Set(habits.flatMap(h=>
+  Object.keys(h.days).filter(k=>h.days[k]==="done")
+ )).size;
+ $("analyticsStats").innerHTML=
+  stat("Усі виконання",doneTotal)+
+  stat("Усі пропуски",missedTotal)+
+  stat("Активних днів",activeDays)+
+  stat("Усього часу",formatTime(seconds));
+ $("analyticsList").innerHTML=habits.map(h=>{
+  const total=doneCount(h)+missCount(h);
+  const rate=total?Math.round(doneCount(h)/total*100):0;
+  return `<div class="panel" style="margin-bottom:12px">
+   <h2>${esc(h.emoji)} ${esc(h.name)}</h2>
+   <p>🔥 Поточна серія: ${streak(h)} · Рекорд: ${bestStreak(h)}</p>
+   <p>✓ Виконано: ${doneCount(h)} · ✕ Пропущено: ${missCount(h)}</p>
+   <p>◷ Час: ${formatTime(totalTime(h))}</p>
+   <p>Успішність серед відмічених днів: ${rate}%</p>
+   <div style="height:9px;background:#34363b;border-radius:20px;overflow:hidden">
+    <div style="height:100%;width:${rate}%;background:${h.color}"></div>
+   </div>
+  </div>`;
+ }).join("")||`<div class="panel empty">Ще немає статистики.</div>`;
 }
-
-function renderSelects() {
-  ["taskProject","focusProject"].forEach(name=>{
-    const el=document.getElementById(name);
-    const old=el.value;
-    el.innerHTML=db.projects.length
-      ? db.projects.map(p=>
-        `<option value="${safe(p.id)}">${safe(p.name)}</option>`
-        ).join("")
-      : `<option value="">Спочатку створи проєкт</option>`;
-    if(db.projects.some(p=>p.id===old))el.value=old;
-  });
+function render(){
+ renderDashboard();
+ renderCalendar();
+ renderHistory();
+ renderAnalytics();
 }
-
-function render() {
-  renderProjects();
-  renderTasks();
-  renderIdeas();
-  renderStats();
-  renderSelects();
-}
-
-const titles={
-  home:"Головна",
-  projects:"Мої проєкти",
-  tasks:"Завдання",
-  today:"План на сьогодні",
-  focus:"Режим фокусу",
-  ideas:"Мої ідеї",
-  stats:"Статистика"
-};
-
-function showPage(page) {
-  document.querySelectorAll("main section[id]").forEach(s=>{
-    s.classList.toggle("hidden",s.id!==page);
-  });
-  document.querySelectorAll(".nav button").forEach(b=>{
-    b.classList.toggle("active",b.dataset.page===page);
-  });
-  document.getElementById("pageTitle").textContent=titles[page];
+document.querySelectorAll(".nav").forEach(b=>{
+ b.addEventListener("click",()=>{
+  document.querySelectorAll(".nav").forEach(x=>x.classList.remove("active"));
+  b.classList.add("active");
+  document.querySelectorAll("main section").forEach(x=>x.classList.add("hidden"));
+  $(b.dataset.page).classList.remove("hidden");
   render();
-}
-
-function openProject() {
-  document.getElementById("projectDialog").showModal();
-}
-
-document.getElementById("projectForm").addEventListener("submit",e=>{
-  e.preventDefault();
-  const name=document.getElementById("projectName").value.trim();
-  const description=document.getElementById("projectDescription").value.trim();
-  if(!name)return;
-  db.projects.push({id:id(),name,description});
-  save();
-  e.target.reset();
-  document.getElementById("projectDialog").close();
-  showPage("projects");
+ });
 });
-
-document.getElementById("taskForm").addEventListener("submit",e=>{
-  e.preventDefault();
-  const title=document.getElementById("taskTitle").value.trim();
-  const projectId=document.getElementById("taskProject").value;
-  const date=document.getElementById("taskDate").value;
-  if(!title || !db.projects.some(p=>p.id===projectId)){
-    alert("Спочатку створи проєкт.");
-    return;
-  }
-  db.tasks.push({id:id(),title,projectId,date,done:false});
-  save();
-  e.target.reset();
-  render();
-});
-
-document.getElementById("ideaForm").addEventListener("submit",e=>{
-  e.preventDefault();
-  const title=document.getElementById("ideaTitle").value.trim();
-  const text=document.getElementById("ideaText").value.trim();
-  if(!title)return;
-  db.ideas.push({
-    id:id(),title,text,
-    date:new Date().toLocaleDateString("uk-UA")
-  });
-  save();
-  e.target.reset();
-  render();
-});
-
-document.querySelectorAll(".nav button").forEach(b=>{
-  b.addEventListener("click",()=>showPage(b.dataset.page));
-});
-
-document.addEventListener("click",e=>{
-  const btn=e.target.closest("[data-action]");
-  if(!btn || btn.type==="checkbox")return;
-  const {action,id:targetId}=btn.dataset;
-
-  if(action==="open-tasks"){
-    showPage("tasks");
-    document.getElementById("taskProject").value=targetId;
-  }
-  if(action==="delete-project"){
-    if(!confirm("Видалити проєкт і всі його завдання?"))return;
-    db.projects=db.projects.filter(p=>p.id!==targetId);
-    db.tasks=db.tasks.filter(t=>t.projectId!==targetId);
-    save();render();
-  }
-  if(action==="delete-task"){
-    db.tasks=db.tasks.filter(t=>t.id!==targetId);
-    save();render();
-  }
-  if(action==="delete-idea"){
-    db.ideas=db.ideas.filter(i=>i.id!==targetId);
-    save();render();
-  }
-});
-
-document.addEventListener("change",e=>{
-  if(e.target.dataset.action==="toggle-task"){
-    const t=db.tasks.find(t=>t.id===e.target.dataset.id);
-    if(t){
-      t.done=e.target.checked;
-      save();render();
-    }
-  }
-});
-
-// ТАЙМЕР ФОКУСУ
-let remaining=25*60;
-let running=false;
-let interval=null;
-let deadline=0;
-let activeProject=null;
-let activeDuration=25;
-
-function displayTimer(){
-  const m=Math.floor(remaining/60);
-  const s=remaining%60;
-  document.getElementById("timerDisplay").textContent=
-    `${String(m).padStart(2,"0")}:${String(s).padStart(2,"0")}`;
-}
-
-function changeDuration(){
-  if(running)return;
-  remaining=Number(document.getElementById("focusDuration").value)*60;
-  displayTimer();
-}
-
-function startTimer(){
-  if(running)return;
-  if(!db.projects.length){
-    alert("Спочатку створи проєкт.");
-    return;
-  }
-  if(remaining<=0)changeDuration();
-  if(activeProject===null){
-    activeProject=document.getElementById("focusProject").value;
-    activeDuration=Number(document.getElementById("focusDuration").value);
-  }
-  running=true;
-  deadline=Date.now()+remaining*1000;
-  document.getElementById("focusProject").disabled=true;
-  document.getElementById("focusDuration").disabled=true;
-
-  interval=setInterval(()=>{
-    remaining=Math.max(0,Math.ceil((deadline-Date.now())/1000));
-    displayTimer();
-    if(remaining===0){
-      clearInterval(interval);
-      running=false;
-      db.sessions.push({
-        id:id(),
-        projectId:activeProject,
-        minutes:activeDuration,
-        date:new Date().toISOString()
-      });
-      save();
-      activeProject=null;
-      document.getElementById("focusProject").disabled=false;
-      document.getElementById("focusDuration").disabled=false;
-      render();
-      alert("Сесію завершено! Час додано до статистики.");
-    }
-  },250);
-}
-
-function pauseTimer(){
-  if(!running)return;
-  remaining=Math.max(0,Math.ceil((deadline-Date.now())/1000));
-  clearInterval(interval);
-  running=false;
-  displayTimer();
-}
-
-function resetTimer(){
-  clearInterval(interval);
-  running=false;
-  activeProject=null;
-  document.getElementById("focusProject").disabled=false;
-  document.getElementById("focusDuration").disabled=false;
-  changeDuration();
-}
-
-document.getElementById("dateText").textContent=
-  new Date().toLocaleDateString("uk-UA",{
-    weekday:"long",day:"numeric",month:"long",year:"numeric"
-  });
-
-displayTimer();
-showPage("home");
+load();
+render();
 </script>
 </body>
 </html>
